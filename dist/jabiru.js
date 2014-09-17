@@ -1,3 +1,5 @@
+// jabiru - Jeremias Menichelli
+// https://github.com/jeremenichelli/jabiru - MIT License
 (function (root, factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
