@@ -26,10 +26,14 @@
 
         // make padding method global
         window[callbackId] = function (data) {
-            callback(data);
+            if (typeof callback === 'function') {
+                callback(data);
+            } else {
+                console.error('You must specify a method as a callback');
+            }
         };
 
-        function onCallbackFinished (responseData) {
+        function onScript (responseData) {
             // unable callback
             window[callbackId] = responseData = null;
 
@@ -43,9 +47,10 @@
                 if (script) {
                     script.onreadystatechange = null;
                 }
-                onCallbackFinished(response);
+                onScript(response);
             }
         };
+
         script.src = baseUrl + '&callback=' + callbackId;
         document.head.appendChild(script);
     };

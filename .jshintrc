@@ -21,6 +21,7 @@
         "module": true,
         "define": true,
         "window": true,
-        "document": true
+        "document": true,
+        "console": true
     }
 }
