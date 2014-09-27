@@ -14,7 +14,7 @@
 })(this, function () {
     'use strict';
 
-    var cName = 'jabiru',
+    var cName = 'callback',
         cNumber = 0;
 
     var _get = function (baseUrl, callback) {
@@ -25,7 +25,7 @@
         cNumber++;
 
         // make padding method global
-        window[callbackId] = function (data) {
+        window.jabiru[callbackId] = function (data) {
             if (typeof callback === 'function') {
                 callback(data);
             } else {
@@ -34,8 +34,8 @@
         };
 
         function onScript (responseData) {
-            // unable callback
-            window[callbackId] = responseData = null;
+            // unable callback and data ref
+            window.jabiru[callbackId] = responseData = null;
 
             // erase script element
             script.parentNode.removeChild(script);
@@ -51,7 +51,7 @@
             }
         };
 
-        script.src = baseUrl + '&callback=' + callbackId;
+        script.src = baseUrl + '?callback=jabiru.' + callbackId;
         document.head.appendChild(script);
     };
 
