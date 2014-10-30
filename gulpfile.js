@@ -15,7 +15,9 @@ var paths = {
             '// ' + package.repository.url + ' - MIT License\n';
 
 gulp.task('minify', ['lint'], function(){
-    return gulp.src(paths.dist)
+    return gulp.src(paths.src)
+        .pipe(concat.header(header))
+        .pipe(gulp.dest(paths.output))
         .pipe(uglify())
         .pipe(rename({
             suffix: '.min'
@@ -27,6 +29,5 @@ gulp.task('lint', function(){
     return gulp.src(paths.src)
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(concat.header(header))
-        .pipe(gulp.dest(paths.output));
+        .pipe(jshint.reporter('fail'))
 });

@@ -14,18 +14,20 @@
 })(this, function () {
     'use strict';
 
-    var cName = 'callback',
-        cNumber = 0;
+    var cName, cNumber, query, isGlobal = false,
+        head = document.head || document.getElementsByTagName('head')[0] || document.body;
 
     var _get = function (baseUrl, callback) {
         var script = document.createElement('script'),
-            callbackId = cName + cNumber;
+            callbackId = cName + cNumber,
+            scope = isGlobal ? window : window.jabiru,
+            scopeQuery = isGlobal ? '' : 'jabiru.';
 
         // increase callback number
         cNumber++;
 
         // make padding method global
-        window.jabiru[callbackId] = function (data) {
+        scope[callbackId] = function (data) {
             if (typeof callback === 'function') {
                 callback(data);
             } else {
@@ -35,7 +37,7 @@
 
         function onScript (responseData) {
             // unable callback and data ref
-            window.jabiru[callbackId] = responseData = null;
+            scope[callbackId] = responseData = null;
 
             // erase script element
             script.parentNode.removeChild(script);
@@ -51,11 +53,38 @@
             }
         };
 
-        script.src = baseUrl + '?callback=jabiru.' + callbackId;
-        document.head.appendChild(script);
+        script.src = baseUrl + query + '=' + scopeQuery + callbackId;
+        head.appendChild(script);
     };
 
+    var _setCallbackName = function (str) {
+        if (typeof str === 'string') {
+            cName = str;
+            cNumber = 0;
+        } else {
+            console.error('Callback name must be a string');
+        }
+    };
+
+    var _setQueryName = function (str) {
+        if (typeof str === 'string') {
+            query = str;
+        } else {
+            console.error('Query name must be a string');
+        }
+    };
+
+    var _setToGlobal = function () {
+        isGlobal = true;
+    };
+
+    _setCallbackName('callback');
+    _setQueryName('?callback');
+
     return {
-        get: _get
+        get: _get,
+        name: _setCallbackName,
+        query: _setQueryName,
+        toGlobal: _setToGlobal
     };
 });
