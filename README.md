@@ -4,7 +4,7 @@ Simple script to manage JSONP calls.
 
 ### Install
 
-Add the distribution script to your project.
+Add the distribution file to your project, it weights only **557 bytes** minified and gzipped.
 
 ```
 <script src="/scripts/jabiru.min.js"></script>
@@ -36,7 +36,7 @@ Of course every API has its own structure so you can modify the query string by 
 jabiru.query('?jsonp');
 ```
 
-You can also decide the name of the method that will wrap the response. The default is ```jabiruCallback```.
+The default is ```jabiruCallback```, but you can also decide the name of the method that will wrap the response using the ```naming``` function.
 
 ```js
 jabiru.naming('myMethod');
