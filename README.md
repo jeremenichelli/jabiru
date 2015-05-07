@@ -2,6 +2,20 @@
 
 Simple script to manage JSONP calls.
 
+### Install
+
+Add the distribution script to your project.
+
+```
+<script src="/scripts/jabiru.min.js"></script>
+```
+
+You can also install it as a node module.
+
+```
+npm install jabiru --save-dev
+```
+
 
 ### Use
 
