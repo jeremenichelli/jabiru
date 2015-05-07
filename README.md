@@ -1,4 +1,4 @@
-# jabiru
+# jabiru [![Build Status](https://travis-ci.org/jeremenichelli/jabiru.svg)](https://travis-ci.org/jeremenichelli/jabiru)
 
 Simple script to manage JSONP calls.
 
@@ -40,7 +40,7 @@ You can chain the configuration methods to make it all by once.
 
 ```js
 jabiru.toGlobal()
-    .name('githubAPI')
+    .naming('githubAPI')
     .query('?callback')
     .get({
         url: 'https://api.github.com/users/octocat',
@@ -50,7 +50,7 @@ jabiru.toGlobal()
     });
 ```
 
-*Remember you don't have to set the **name** and the **query** string every time. For the rest of the calls you just have to use the **get** method.*
+*Remember you don't have to set the _name_ and the _query_ string every time. For the rest of the calls you just have to use the _get_ method.*
 
 
 ### Contribute

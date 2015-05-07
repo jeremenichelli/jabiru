@@ -63,7 +63,7 @@
         head.appendChild(script);
     };
 
-    jabiru.name = function(str) {
+    jabiru.naming = function(str) {
         if (typeof str === 'string') {
             cName = str;
             cNumber = 0;
@@ -87,7 +87,7 @@
         return jabiru;
     };
 
-    jabiru.name('jabiruCallback');
+    jabiru.naming('jabiruCallback');
     jabiru.query('?callback');
 
     return jabiru;

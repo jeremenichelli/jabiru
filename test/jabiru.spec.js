@@ -9,8 +9,8 @@
             it('get method available at jabiru namespace', function() {
                 expect(typeof window.jabiru.get).toBe('function');
             });
-            it('name method available at jabiru namespace', function() {
-                expect(typeof window.jabiru.name).toBe('function');
+            it('naming method available at jabiru namespace', function() {
+                expect(typeof window.jabiru.naming).toBe('function');
             });
             it('query method available at jabiru namespace', function() {
                 expect(typeof window.jabiru.query).toBe('function');
