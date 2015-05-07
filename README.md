@@ -25,7 +25,7 @@ jabiru.query('?jsonp');
 You can also decide the name of the method that will wrap the response. The default is ```jabiruCallback```.
 
 ```js
-jabiru.name('myMethod');
+jabiru.naming('myMethod');
 ```
 
 Every time you change the name of the method the counter will be set to ```0``` again. Also this name will be contained in the module namespace for security, in this example ```jabiru.myMethod0``` will be the name of the method use in the first call.
