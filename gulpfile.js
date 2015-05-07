@@ -1,33 +1,70 @@
-var gulp = require('gulp'),
-    jshint = require('gulp-jshint'),
-    stylish = require('jshint-stylish'),
-    uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
-    concat = require('gulp-concat-util'),
-    package = require('./package.json');
+(function() {
+    'use strict';
 
-var paths = {
-        src: 'src/' + package.name + '.js',
-        dist: 'dist/' + package.name + '.js',
-        output: 'dist/'
-    },
-    header =  '// ' + package.title + ' - ' + package.author + '\n' +
-            '// ' + package.repository.url + ' - MIT License\n';
+    var gulp = require('gulp'),
+        rename = require('gulp-rename'),
+        jshint = require('gulp-jshint'),
+        jscs = require('gulp-jscs'),
+        uglify = require('gulp-uglify'),
+        karma = require('gulp-karma'),
+        concat = require('gulp-concat-util'),
+        del = require('del'),
+        project = require('./package.json');
 
-gulp.task('minify', ['lint'], function(){
-    return gulp.src(paths.src)
-        .pipe(concat.header(header))
-        .pipe(gulp.dest(paths.output))
-        .pipe(uglify())
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(gulp.dest(paths.output));
-});
+    // project paths
+    var paths = {
+        src: './src/' + project.name + '.js',
+        spec: './test/' + project.name + '.spec.js',
+        output: './dist'
+    }
 
-gulp.task('lint', function(){
-    return gulp.src(paths.src)
-        .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(jshint.reporter('fail'))
-});
+    // banner with project info
+    var banner = '/*' +
+        '\n * ' + project.title + ' - v' + project.version +
+        '\n * ' + project.description +
+        '\n * ' + project.url +
+        '\n * ' + project.copyright + ' (c) ' + project.author + ' - ' + project.license + ' License' +
+        '\n*/\n\n';
+
+    // tasks
+    gulp.task('hint:src', function() {
+        return gulp.src(paths.src)
+            .pipe(jscs())
+            .pipe(jshint())
+            .pipe(jshint.reporter('jshint-stylish'))
+            .pipe(jshint.reporter('fail'));
+    });
+
+    gulp.task('hint:spec', function() {
+        return gulp.src(paths.spec)
+            .pipe(jscs())
+            .pipe(jshint())
+            .pipe(jshint.reporter('jshint-stylish'))
+            .pipe(jshint.reporter('fail'));
+    });
+
+    gulp.task('hint', [ 'hint:src', 'hint:spec' ]);
+
+    gulp.task('test', [ 'hint' ], function() {
+        return gulp.src([ paths.spec, paths.src ])
+            .pipe(karma({configFile: 'test/karma.conf.js'}));
+    });
+
+    gulp.task('build', [ 'test' ], function () {
+        // clean dist content first
+        del(paths.output + '/*');
+
+        return gulp.src(paths.src)
+            .pipe(concat.header(banner))
+            .pipe(gulp.dest(paths.output))
+            .pipe(uglify())
+            .pipe(rename({
+                suffix: '.min'
+            }))
+            .pipe(gulp.dest(paths.output));
+    });
+
+    // default task
+    gulp.task('default', [ 'build' ]);
+
+})();

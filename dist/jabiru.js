@@ -1,6 +1,11 @@
-// jabiru - Jeremias Menichelli
-// https://github.com/jeremenichelli/jabiru - MIT License
-(function (root, factory) {
+/*
+ * jabiru - v1.0.0
+ * Simple script to manage JSONP calls.
+ * https://github.com/jeremenichelli/jabiru
+ * 2014 (c) Jeremias Menichelli - MIT License
+*/
+
+(function(root, factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         define(function() {
@@ -11,45 +16,53 @@
     } else {
         root.jabiru = factory(root);
     }
-})(this, function () {
+})(this, function() {
     'use strict';
 
-    var cName, cNumber, query, isGlobal = false,
+    var cName, cNumber, query, isGlobal = false, jabiru = {},
         head = document.head || document.getElementsByTagName('head')[0] || document.body;
 
-    var _get = function (baseUrl, callback) {
+    jabiru.get = function(config) {
+        // if config object doesn't contain url and
+        // a success callback method throw an error
+        if (!config || typeof config.url !== 'string' || typeof config.success !== 'function') {
+            throw new Error('Invalid option object argument');
+        }
+
         var script = document.createElement('script'),
             callbackId = cName + cNumber,
             scope = isGlobal ? window : window.jabiru,
-            scopeQuery = isGlobal ? '' : 'jabiru.';
+            scopeQuery = isGlobal ? '' : 'jabiru.',
+            callback = config.success,
+            baseUrl = config.url;
 
         // increase callback number
         cNumber++;
 
         // make padding method global
-        scope[callbackId] = function (data) {
+        scope[callbackId] = function(data) {
             if (typeof callback === 'function') {
                 callback(data);
             } else {
-                console.error('You must specify a method as a callback');
+                throw new Error('You must specify a method as a callback');
             }
         };
 
-        function onScript (responseData) {
+        function onLoadScript(responseData) {
             // unable callback and data ref
             scope[callbackId] = responseData = null;
 
             // erase script element
-            script.parentNode.removeChild(script);
+            head.removeChild(script);
         }
 
         // attach event
-        script.onload = script.onreadystatechange = function (response) {
+        script.onload = script.onreadystatechange = function(response) {
             if ((!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
                 if (script) {
                     script.onreadystatechange = null;
                 }
-                onScript(response);
+                onLoadScript(response);
             }
         };
 
@@ -57,34 +70,32 @@
         head.appendChild(script);
     };
 
-    var _setCallbackName = function (str) {
+    jabiru.name = function(str) {
         if (typeof str === 'string') {
             cName = str;
             cNumber = 0;
+            return jabiru;
         } else {
-            console.error('Callback name must be a string');
+            throw new Error('Callback name must be a string');
         }
     };
 
-    var _setQueryName = function (str) {
+    jabiru.query = function(str) {
         if (typeof str === 'string') {
             query = str;
+            return jabiru;
         } else {
-            console.error('Query name must be a string');
+            throw new Error('Query name must be a string');
         }
     };
 
-    var _setToGlobal = function () {
+    jabiru.toGlobal = function() {
         isGlobal = true;
+        return jabiru;
     };
 
-    _setCallbackName('callback');
-    _setQueryName('?callback');
+    jabiru.name('jabiruCallback');
+    jabiru.query('?callback');
 
-    return {
-        get: _get,
-        name: _setCallbackName,
-        query: _setQueryName,
-        toGlobal: _setToGlobal
-    };
+    return jabiru;
 });

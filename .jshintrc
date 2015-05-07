@@ -1,4 +1,7 @@
 {
+    "bitwise": true,
+    "curly": false,
+    "quotmark": "single",
     "indent": 4,
     "camelcase": true,
     "immed": true,
@@ -11,18 +14,22 @@
     "noempty": true,
     "nonbsp": true,
     "undef": true,
-    "strict": true,
     "trailing": true,
     "maxparams": 4,
-    "maxlen": 120,
+    "maxlen": 125,
     "eqnull": true,
     "laxcomma": true,
     "globals": {
-        "module": true,
-        "define": true,
         "window": true,
         "document": true,
-        "console": true,
-        "jabiru": true
+        "expect": true,
+        "describe": true,
+        "jabiru": true,
+        "it": true,
+        "beforeEach": true,
+        "afterEach": true,
+        "define": true,
+        "module": true,
+        "spyOn": true
     }
 }
