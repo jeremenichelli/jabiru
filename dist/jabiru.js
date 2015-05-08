@@ -1,5 +1,5 @@
 /*
- * jabiru - v1.0.3
+ * jabiru - v1.0.4
  * Simple script to manage JSONP calls
  * https://github.com/jeremenichelli/jabiru
  * 2014 (c) Jeremias Menichelli - MIT License
