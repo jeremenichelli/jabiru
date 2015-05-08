@@ -2,7 +2,7 @@
   "name": "jabiru",
   "title": "jabiru",
   "author": "Jeremias Menichelli",
-  "description": "Simple script to manage JSONP calls.",
+  "description": "Simple script to manage JSONP calls",
   "copyright": "2014",
   "license": "MIT",
   "main": "./dist/jabiru.js",
@@ -37,8 +37,7 @@
   },
   "keywords": [
     "jsonp",
-    "cross",
-    "domain",
+    "cross domain",
     "ajax",
     "load",
     "scripts"

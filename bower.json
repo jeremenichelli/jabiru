@@ -1,0 +1,29 @@
+{
+  "name": "jabiru",
+  "version": "1.0.2",
+  "homepage": "https://github.com/jeremenichelli/jabiru",
+  "authors": [
+    "Jeremias Menichelli"
+  ],
+  "description": "Simple script to manage JSONP calls.",
+  "main": "./dist/jabiru.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "ajax",
+    "jsonp",
+    "cors"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "gulpfile.js",
+    "test",
+    "src"
+  ]
+}

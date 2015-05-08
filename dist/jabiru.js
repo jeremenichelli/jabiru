@@ -1,6 +1,6 @@
 /*
  * jabiru - v1.0.2
- * Simple script to manage JSONP calls.
+ * Simple script to manage JSONP calls
  * https://github.com/jeremenichelli/jabiru
  * 2014 (c) Jeremias Menichelli - MIT License
 */
@@ -48,7 +48,7 @@
             }
         };
 
-        function onLoadScript(responseData) {
+        function onScriptLoaded(responseData) {
             // unable callback and data ref
             scope[callbackId] = responseData = null;
 
@@ -57,12 +57,12 @@
         }
 
         // attach event
-        script.onload = script.onreadystatechange = function(response) {
-            if ((!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
+        script.onload = script.onerror = script.onreadystatechange = function(response) {
+            if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
                 if (script) {
                     script.onreadystatechange = null;
                 }
-                onLoadScript(response);
+                onScriptLoaded(response);
             }
         };
 
