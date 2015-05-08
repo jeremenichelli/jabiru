@@ -16,6 +16,12 @@ You can also install it as a node module.
 npm install jabiru --save-dev
 ```
 
+Using bower to install packages in your project?
+
+```
+bower install jabiru
+```
+
 
 ### Use
 
