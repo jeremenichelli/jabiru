@@ -6,19 +6,19 @@ Simple script to manage JSONP calls.
 
 Add the distribution file to your project, it weights only **557 bytes** minified and gzipped.
 
-```
+```html
 <script src="/scripts/jabiru.min.js"></script>
 ```
 
 You can also install it as a node module.
 
-```
+```bash
 npm install jabiru --save-dev
 ```
 
 Using bower to install packages in your project?
 
-```
+```bash
 bower install jabiru --save-dev
 ```
 
@@ -36,7 +36,7 @@ jabiru.get({
 });
 ```
 
-Of course every API has its own structure so you can modify the query string by calling the ```query```method. The default is ```?callback```.
+APIs have different query structure so you can modify the **jsonp** query string by calling the ```query``` present in the namespace of this project. The default is ```?callback```.
 
 ```js
 jabiru.query('?jsonp');
@@ -48,11 +48,11 @@ The default is ```jabiruCallback```, but you can also decide the name of the met
 jabiru.naming('myMethod');
 ```
 
-Every time you change the name of the method the counter will be set to ```0``` again. Also this name will be contained in the module namespace for security, in this example ```jabiru.myMethod0``` will be the name of the method use in the first call.
+Every time you change the name of the method the internal call counter will be set to ```0``` again. Also this name will be contained in the module namespace for security, in this example ```jabiru.myMethod0``` for the first call.
 
-If you want it to be globally available you can call ```jabiru.toGlobal()``` before starting to use the script.
+If you want it to be globally available you can call ```jabiru.toGlobal()``` before starting to use the script, but ```window.MyMethod0``` will be available for any script while the call is being made.
 
-*Once you call this method you can back to not global state.*
+*Once you call *```jabiru.toGlobal()``` you can't revert to the namespace state.
 
 ### Chaining
 
