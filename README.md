@@ -52,7 +52,7 @@ Every time you change the name of the method the internal call counter will be s
 
 If you want it to be globally available you can call ```jabiru.toGlobal()``` before starting to use the script, but ```window.MyMethod0``` will be available for any script while the call is being made.
 
-*Once you call *```jabiru.toGlobal()``` you can't revert to the namespace state.
+*Once you call ```jabiru.toGlobal()``` you can't revert to the namespace state.*
 
 ### Chaining
 
