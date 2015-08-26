@@ -13,7 +13,7 @@
     'use strict';
 
     var cName, cNumber, query, isGlobal = false, jabiru = {},
-        head = document.head || document.getElementsByTagName('head')[0] || document.body;
+        ref = document.getElementsByTagName('script')[0];
 
     jabiru.get = function(config) {
         // if config object doesn't contain url and
@@ -46,7 +46,7 @@
             scope[callbackId] = responseData = null;
 
             // erase script element
-            head.removeChild(script);
+            script.parentNode.removeChild(script);
         }
 
         // attach event
@@ -60,7 +60,10 @@
         };
 
         script.src = baseUrl + query + '=' + scopeQuery + callbackId;
-        head.appendChild(script);
+
+        // insert strategy supported on Paul Irish post:
+        // http://www.paulirish.com/2011/surefire-dom-element-insertion/
+        ref.parentNode.insertBefore(script, ref);
     };
 
     jabiru.naming = function(str) {
