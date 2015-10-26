@@ -41,9 +41,9 @@
             }
         };
 
-        function onScriptLoaded(responseData) {
+        function onScriptLoaded() { // eslint-disable-line func-style
             // unable callback and data ref
-            scope[callbackId] = responseData = null;
+            scope[callbackId] = null;
 
             // erase script element
             script.parentNode.removeChild(script);
@@ -67,21 +67,21 @@
     };
 
     jabiru.naming = function(str) {
-        if (typeof str === 'string') {
+        if (typeof str !== 'string') {
+            throw new Error('Callback name must be a string');
+        } else {
             cName = str;
             cNumber = 0;
             return jabiru;
-        } else {
-            throw new Error('Callback name must be a string');
         }
     };
 
     jabiru.query = function(str) {
-        if (typeof str === 'string') {
+        if (typeof str !== 'string') {
+            throw new Error('Query name must be a string');
+        } else {
             query = str;
             return jabiru;
-        } else {
-            throw new Error('Query name must be a string');
         }
     };
 
