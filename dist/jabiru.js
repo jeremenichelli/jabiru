@@ -18,34 +18,32 @@
 })(this, function() {
     'use strict';
 
-    var cName, cNumber, query, isGlobal = false, jabiru = {},
-        ref = document.getElementsByTagName('script')[0];
+    var cName,
+        cNumber,
+        query,
+        isGlobal = false,
+        jabiru = {},
+        _doc = document,
+        ref = _doc.getElementsByTagName('script')[0] || _doc.head || _doc.body;
 
     jabiru.get = function(config) {
         // if config object doesn't contain url and
         // a success callback method throw an error
-        if (!config || typeof config.url !== 'string' || typeof config.success !== 'function') {
+        if (!config || typeof config.url !== 'string' || typeof config.success !== 'function'
+                || config.fail && typeof config.fail !== 'function') {
             throw new Error('Invalid option object argument');
         }
 
-        var script = document.createElement('script'),
+        var script = _doc.createElement('script'),
             callbackId = cName + cNumber,
             scope = isGlobal ? window : window.jabiru,
-            scopeQuery = isGlobal ? '' : 'jabiru.',
-            callback = config.success,
-            baseUrl = config.url;
+            scopeQuery = isGlobal ? '' : 'jabiru.';
 
         // increase callback number
         cNumber++;
 
         // make padding method global
-        scope[callbackId] = function(data) {
-            if (typeof callback === 'function') {
-                callback(data);
-            } else {
-                throw new Error('You must specify a method as a callback');
-            }
-        };
+        scope[callbackId] = config.success;
 
         function onScriptLoaded() { // eslint-disable-line func-style
             // unable callback and data ref
@@ -55,17 +53,17 @@
             script.parentNode.removeChild(script);
         }
 
-        // attach event
-        script.onload = script.onerror = script.onreadystatechange = function(response) {
-            if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
-                if (script) {
-                    script.onreadystatechange = null;
-                }
-                onScriptLoaded(response);
-            }
-        };
+        // attach events
+        script.onload = onScriptLoaded;
 
-        script.src = baseUrl + query + '=' + scopeQuery + callbackId;
+        if (config.fail) {
+            script.onerror = function() {
+                config.fail();
+                onScriptLoaded();
+            };
+        }
+
+        script.src = config.url + query + '=' + scopeQuery + callbackId;
 
         // insert strategy supported on Paul Irish post:
         // http://www.paulirish.com/2011/surefire-dom-element-insertion/
@@ -96,6 +94,7 @@
         return jabiru;
     };
 
+    // set default configuration
     jabiru.naming('jabiruCallback');
     jabiru.query('?callback');
 

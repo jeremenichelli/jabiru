@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jabiru test page| Jeremias Menichelli</title>
+
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .row {
+            margin: 0px auto;
+            max-width: 950px;
+            padding: 55px;
+        }
+
+        .column {
+            float: left;
+            margin-left: 8%;
+            min-height: 1px;
+        }
+
+        .column-1 {
+            width: 28%;
+        }
+
+        .column-2 {
+            width: 64%;
+        }
+
+        .column-3 {
+            width: 100%;
+        }
+
+        .column:first-child {
+            margin: 0;
+        }
+
+        h2 {
+            position: relative;
+            margin-top: 0;
+            text-transform: uppercase;
+        }
+
+        p {
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        .status-card {
+            background-color: #fefefe;
+            border-radius: 8px;
+            min-height: 185px;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: all .35s ease;
+        }
+
+        .done {
+            background-color: #69f0ae;
+        }
+
+        .status-card:before {
+            content: '✓';
+            color: #2e7d32;
+            font-size: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        .status-card.done:before {
+            font-size: 20em;
+            opacity: .25;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div id="case-1" class="column column-1 status-card">
+            <h2>case 1</h2>
+            <p>
+                <strong>success</strong> callback executed when response comes back with <strong>200</strong> code.
+            </p>
+        </div>
+        <div id="case-2" class="column column-1 status-card">
+            <h2>case 2</h2>
+            <p>
+                <strong>success</strong> callback executed when response comes back with <strong>200</strong> code, but API throws an internal not found <strong>404</strong> code.
+            </p>
+        </div>
+        <div id="case-3" class="column column-1 status-card">
+            <h2>case 3</h2>
+            <p><strong>fail</strong> callback executed when url does not respond.</p>
+        </div>
+    </div>
+
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,400italic">
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/necolas/normalize.css/master/normalize.css">
+    <script src="dist/jabiru.js"></script>
+    <script>
+        (function(_win, _doc) {
+            'use strict';
+
+            jabiru
+                .naming('test')
+                .toGlobal();
+
+            // case 1
+            jabiru.get({
+                url: 'https://api.github.com/users/jeremenichelli',
+                success: function() {
+                    var el = _doc.getElementById('case-1');
+
+                    el.className += ' done';
+                }
+            });
+
+            // case 2
+            jabiru.get({
+                url: 'https://api.github.com/users/fgdsahuigshai',
+                success: function() {
+                    var el = _doc.getElementById('case-2');
+
+                    el.className += ' done';
+                }
+            });
+
+            // case 3
+            jabiru.get({
+                url: 'https://failapi.github.com/user/bla',
+                success: function() {},
+                fail: function() {
+                    var el = _doc.getElementById('case-3');
+
+                    el.className += ' done';
+                }
+            });
+        })(window, document)
+    </script>
+</body>
+</html>
