@@ -1,5 +1,5 @@
 /*
- * jabiru - v1.1.1
+ * jabiru - v2.0.1
  * https://github.com/jeremenichelli/jabiru
  * 2014 (c) Jeremias Menichelli - MIT License
 */
