@@ -28,7 +28,7 @@
     "url": "https://github.com/jeremenichelli/jabiru/issues"
   },
   "homepage": "https://github.com/jeremenichelli/jabiru#readme",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "scripts": {
     "test": "gulp test"
   },
