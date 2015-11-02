@@ -86,7 +86,7 @@ jabiru.toGlobal()
     .query('?callback')
     .get({
         url: 'https://api.github.com/users/jeremenichelli',
-        function(response) {
+        success: function(response) {
             console.log(response.name);
         }
     });
