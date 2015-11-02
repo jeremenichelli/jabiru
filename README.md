@@ -6,7 +6,7 @@ Simple script to manage JSONP calls.
 
 ## Install
 
-Add the distribution file to your project, it weights only **557 bytes** minified and gzipped.
+Add the distribution file to your project.
 
 ```html
 <script src="/scripts/jabiru.min.js"></script>
