@@ -16,8 +16,6 @@
     /*
      * gulp plugins available
      *
-     * $.rename: gulp-rename
-     * $.uglify: gulp-uglify
      * $.karma: gulp-karma
      * $.concatUtil: gulp-concat-util
      * $.eslint: gulp-eslint
@@ -94,11 +92,6 @@
     gulp.task('build', [ 'test' ], function () {
         return gulp.src(paths.src)
             .pipe($.concatUtil.header(banner))
-            .pipe(gulp.dest(paths.output))
-            .pipe($.uglify())
-            .pipe($.rename({
-                suffix: '.min'
-            }))
             .pipe(gulp.dest(paths.output));
     });
 

@@ -15,9 +15,6 @@
             it('query method available at jabiru namespace', function() {
                 expect(typeof window.jabiru.query).toBe('function');
             });
-            it('toGlobal method available at jabiru namespace', function() {
-                expect(typeof window.jabiru.toGlobal).toBe('function');
-            });
         });
     });
 })();

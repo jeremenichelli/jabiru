@@ -11,17 +11,16 @@
             return factory(root);
         });
     } else if (typeof exports === 'object') {
-        module.exports = factory;
+        module.exports = factory(root);
     } else {
         root.jabiru = factory(root);
     }
-})(this, function() {
+})(self, function(root) {
     'use strict';
 
     var cName,
         cNumber,
         query,
-        isGlobal = false,
         jabiru = {},
         _doc = document,
         ref = _doc.getElementsByTagName('script')[0] || _doc.head || _doc.body;
@@ -36,8 +35,8 @@
 
         var script = _doc.createElement('script'),
             callbackId = cName + cNumber,
-            scope = isGlobal ? window : window.jabiru,
-            scopeQuery = isGlobal ? '' : 'jabiru.';
+            scope = root,
+            scopeQuery = 'self.';
 
         // increase callback number
         cNumber++;
@@ -47,7 +46,7 @@
 
         function onScriptLoaded() { // eslint-disable-line func-style
             // unable callback and data ref
-            scope[callbackId] = null;
+            delete scope[callbackId];
 
             // erase script element
             script.parentNode.removeChild(script);
@@ -87,11 +86,6 @@
             query = str;
             return jabiru;
         }
-    };
-
-    jabiru.toGlobal = function() {
-        isGlobal = true;
-        return jabiru;
     };
 
     // set default configuration
